@@ -1,0 +1,23 @@
+<div class="register-page">
+  <h3 class="mt-0">Register</h3>
+  <div class="fields mt-2">
+    <div class="email flex flex-column gap-1">
+      <label>Email</label>
+      <input pInputText type="email" placeholder="test@test.com"/>
+    </div>
+    <div class="password flex flex-column gap-1 mt-2">
+      <label>Password</label>
+      <p-password fluid placeholder="*******"/>
+    </div>
+    <div class="confirm-password flex flex-column gap-1 mt-2">
+      <label>Confirm Password</label>
+      <p-password fluid placeholder="*******"/>
+    </div>
+  </div>
+  <div class="actions flex flex-column gap-2 mt-2">
+    <p-button class="w-full" fluid>Register</p-button>
+    <p-button routerLink="/auth/login" text class="white-space-nowrap" variant="outlined" fluid>
+      Already have an account? Login
+    </p-button>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<p-toolbar>
+  <ng-template #start>
+    GlobalBank
+  </ng-template>
+  <ng-template #end>
+    @if (isAuthenticated()) {
+
+    } @else {
+      <p-button routerLink="/auth/login">Login</p-button>
+    }
+  </ng-template>
+</p-toolbar>
