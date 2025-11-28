@@ -1,0 +1,44 @@
+name: Deploy to Firebase
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Debug token
+        run: |
+          if [ -z "${FIREBASE_TOKEN}" ]; then
+            echo "TOKEN IS EMPTY"
+          else
+            echo "TOKEN LENGTH:"
+            echo ${#FIREBASE_TOKEN}
+          fi
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build angular
+        run: npm run build
+
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@v13.0.3
+        with:
+          args: deploy --only hosting
+          cwd: ./
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
