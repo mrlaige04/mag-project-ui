@@ -1,0 +1,21 @@
+<div class="auth-wrapper">
+  <div class="left-side flex flex-column justify-content-center align-items-center bg-black-alpha-10">
+    <div class="auth-card-wrapper">
+      <div class="logo flex gap-2 cursor-pointer w-fit align-items-center" routerLink="/welcome">
+        <img src="./images/logo.png" height="30"/>
+        <h3 class="text-2xl select-none my-3">Global Bank</h3>
+      </div>
+      <p-card class="auth-card">
+        <ng-template #header></ng-template>
+        <router-outlet/>
+      </p-card>
+    </div>
+  </div>
+  <div class="right-side bg-primary">
+    <div class="auth-preview-wrapper">
+      <h3>Secure Banking</h3>
+      <p>Experience world-class banking services with enterprise-grade security and 24/7 support.</p>
+      <div class=""></div>
+    </div>
+  </div>
+</div>
