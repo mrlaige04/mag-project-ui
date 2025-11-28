@@ -3,6 +3,7 @@ import {Button} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';
 import {Password} from 'primeng/password';
 import {RouterLink} from '@angular/router';
+import {LabeledInput} from '../../../components/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,8 @@ import {RouterLink} from '@angular/router';
     Button,
     InputText,
     Password,
-    RouterLink
+    RouterLink,
+    LabeledInput
   ],
   templateUrl: './login.html',
   styleUrl: './login.scss',

@@ -1,0 +1,44 @@
+$header-height: 64px;
+
+:host {
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $header-height;
+  z-index: 999;
+
+  .p-toolbar {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+}
+
+main {
+  margin-top: $header-height;
+
+  & section {
+    padding: 1rem 4rem;
+  }
+
+  & .hero-section {
+    padding: 6rem 4rem;
+    gap: 5rem;
+
+    & img {
+      max-width: 100%;
+      max-height: 40vh;
+      height: auto;
+      object-fit: cover;
+      border-radius: .5rem;
+    }
+  }
+}
