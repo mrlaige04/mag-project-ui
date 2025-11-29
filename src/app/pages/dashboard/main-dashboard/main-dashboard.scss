@@ -1,0 +1,23 @@
+.main-dashboard-page {
+  padding: 2rem 0;
+}
+
+::ng-deep .p-dataview-content {
+  background: transparent !important;
+}
+
+.cards {
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  & .card-wrapper {
+    position: relative;
+
+    & .card {
+      min-width: 20rem;
+      cursor: pointer;
+      user-select: none;
+    }
+  }
+}
+

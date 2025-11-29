@@ -1,0 +1,30 @@
+<div class="open-new-card-page">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="type">
+      <p-select-button optionValue="name" size="large" formControlName="type" fluid [options]="availableTypes">
+        <ng-template #item let-item>
+          {{ item.displayName ?? item.name }}
+        </ng-template>
+      </p-select-button>
+      <span class="mt-2 text-color-secondary block">{{ activeType?.description }}</span>
+    </div>
+    <div class="provider mt-4">
+      <p-select-button optionValue="name" size="large" formControlName="provider" fluid [options]="availableProviders">
+        <ng-template #item let-item>
+          <div class="flex gap-2 align-items-center">
+            <img src="./images/{{item.name}}.png" width="30"/>
+            {{ item.displayName ?? item.name }}
+          </div>
+        </ng-template>
+      </p-select-button>
+      <span class="mt-2 text-color-secondary block">{{ activeProvider?.description }}</span>
+    </div>
+    <div class="agree my-3">
+      <p-checkbox binary formControlName="agreeTerms"/>
+      <label class="ml-2">You agree with Terms and Conditions</label>
+    </div>
+    <div class="actions mt-4">
+      <p-button [loading]="isLoading()" type="submit" label="Create" fluid [disabled]="!form.valid"/>
+    </div>
+  </form>
+</div>

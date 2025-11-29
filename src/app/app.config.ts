@@ -4,9 +4,13 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import {providePrimeNG} from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
-import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {AppThemePreset} from '../preset';
+import {MessageService} from 'primeng/api';
+import {passTokenInterceptor} from './utils/interceptors/pass-token-interceptor';
+import {handleServerNotRespondingInterceptor} from './utils/interceptors/handle-server-not-responding-interceptor';
+import {DialogService} from 'primeng/dynamicdialog';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,6 +24,11 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
-    provideHttpClient()
+    provideHttpClient(withInterceptors([
+      passTokenInterceptor,
+      handleServerNotRespondingInterceptor
+    ])),
+    DialogService,
+    MessageService
   ]
 };

@@ -1,0 +1,17 @@
+.container-wrapper {
+  overflow: auto;
+  margin-top: var(--header-height);
+  max-height: calc(100vh - var(--header-height));
+  min-height: calc(100vh - var(--header-height));
+}
+
+.container {
+  width: min(90%, 1300px);
+  margin: 0 auto;
+}
+
+.layout {
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+}

@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import 'primeflex/primeflex.min.css';
 @import "primeicons/primeicons.css";
+@import 'app/styles/variables';
 
 html, body {
   font-family: 'Inter', sans-serif;
@@ -8,4 +9,32 @@ html, body {
   margin: 0;
   box-sizing: border-box;
   min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: var(--p-primary-300);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--p-primary-500) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--p-primary-500);
+  border-radius: 8px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--p-primary-600);
 }

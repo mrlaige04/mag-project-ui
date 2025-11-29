@@ -1,0 +1,60 @@
+<div class="card-details-page py-4">
+  <div class="grid">
+    <div class="card-preview col-7">
+      <p-card class="bg-white mx-auto text-black-alpha-80">
+        <ng-template #title>
+          <div class="flex justify-content-between align-items-start">
+            <h4 class="my-0">Super Mega Card</h4>
+            <img src="./images/nfc.png" height="30"/>
+          </div>
+        </ng-template>
+        <div class="h-12rem"></div>
+        <ng-template #footer>
+          <div class="flex justify-content-between gap-5 align-items-end">
+            <div class="w-full text-xl font-semibold text-black-alpha-90">
+              <div class="holder_exp flex justify-content-between">
+                <p class="holder my-0">John Barber</p>
+                <p class="exp my-0">08/11</p>
+              </div>
+              <p class="number my-0 w-full text-left">4242 4242 4242 4242</p>
+            </div>
+            <div class="provider">
+              <img src="./images/mastercard.png" height="50"/>
+            </div>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+
+    <div class="transactions col-5">
+      <p-card class="h-full">
+        <ng-template #title>
+          <span class="text-xl font-bold">Transactions</span>
+        </ng-template>
+      </p-card>
+    </div>
+  </div>
+  <div class="actions mt-4">
+    <p-card>
+      <ng-template #title>
+        <span class="text-xl font-bold">Settings</span>
+      </ng-template>
+      <div class="settings-list mt-2">
+        <div class="setting block-card">
+          <div class="icon">
+            <i class="pi pi-ban"></i>
+          </div>
+          <span class="name">Block Card</span>
+        </div>
+      </div>
+      <div class="settings-list mt-2">
+        <div class="setting block-card">
+          <div class="icon">
+            <i class="pi pi-times"></i>
+          </div>
+          <span class="name">Close Card</span>
+        </div>
+      </div>
+    </p-card>
+  </div>
+</div>

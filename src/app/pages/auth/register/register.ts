@@ -3,6 +3,8 @@ import {Button} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';
 import {Password} from 'primeng/password';
 import {RouterLink} from '@angular/router';
+import {LabeledInput} from '../../../components/forms';
+import {BasePage} from '../../../components/common/base-page/base-page';
 
 @Component({
   selector: 'app-register',
@@ -10,11 +12,12 @@ import {RouterLink} from '@angular/router';
     Button,
     InputText,
     Password,
-    RouterLink
+    RouterLink,
+    LabeledInput
   ],
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })
-export class Register {
+export class Register extends BasePage {
 
 }

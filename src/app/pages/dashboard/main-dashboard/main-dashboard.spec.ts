@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LayoutWrapper } from './layout-wrapper';
+import { MainDashboard } from './main-dashboard';
 
-describe('LayoutWrapper', () => {
-  let component: LayoutWrapper;
-  let fixture: ComponentFixture<LayoutWrapper>;
+describe('MainDashboard', () => {
+  let component: MainDashboard;
+  let fixture: ComponentFixture<MainDashboard>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LayoutWrapper]
+      imports: [MainDashboard]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(LayoutWrapper);
+    fixture = TestBed.createComponent(MainDashboard);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

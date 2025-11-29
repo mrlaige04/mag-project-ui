@@ -23,7 +23,7 @@ export const AppThemePreset = definePreset(Aura, {
       '950': "{blue.950}"
     },
     formField: {
-      borderRadius: '0.35rem',
-    }
+      borderRadius: '0.2rem',
+    },
   }
 });
