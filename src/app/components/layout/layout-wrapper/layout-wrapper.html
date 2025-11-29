@@ -1,1 +1,10 @@
-<app-navbar/>
+<div class="layout">
+  <app-navbar/>
+
+  <div class="container-wrapper">
+    <div class="container">
+      <p-breadcrumb styleClass="mt-3 p-1 py-0 bg-transparent" [model]="breadcrumbItems" [home]="homeItem"/>
+      <router-outlet/>
+    </div>
+  </div>
+</div>

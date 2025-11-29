@@ -1,6 +1,9 @@
 <p-toolbar class="border-bottom-1">
   <ng-template #start>
-    GlobalBank
+    <div class="logo flex gap-2 align-items-center">
+      <img src="./images/logo.png" class="text-primary" width="30"/>
+      <h2 class="name my-0 text-primary">Global Bank</h2>
+    </div>
   </ng-template>
   <ng-template #end>
     @if (isAuthenticated()) {

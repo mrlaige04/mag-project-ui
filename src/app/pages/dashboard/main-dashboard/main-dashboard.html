@@ -1,0 +1,101 @@
+<div class="main-dashboard-page">
+  <section class="balance-and-cards">
+    <p class="text-color-secondary text-lg my-2">Total Balance</p>
+    <strong class="text-5xl">$57,650.80</strong>
+    <div class="cards flex flex-row gap-3 my-4">
+      @for (card of cards; track card.number) {
+        <div class="card-wrapper">
+          <p-card routerLink="/cards/1" class="card w-20rem h-10rem" [class.bg-primary]="card.isPrimary === true">
+            <ng-template #title>
+              <div class="flex justify-content-between align-items-center">
+                <i class="pi pi-credit-card text-2xl"></i>
+                <span class="tags">
+                  <p-chip [label]="card.tags" class="px-2 py-1 text-sm"/>
+                </span>
+              </div>
+            </ng-template>
+            <strong class="text-2xl my-3 block">${{ card.balance }}</strong>
+            <ng-template #footer>
+              <i>**** {{ card.number.slice(-4) }}</i>
+            </ng-template>
+          </p-card>
+        </div>
+      }
+
+      <div class="card-wrapper">
+        <p-card (click)="openNewCardDialog()"
+                class="card w-20rem h-10rem flex justify-content-center align-items-center cursor-pointer hover:bg-white-alpha-10">
+          <i class="pi pi-plus font-bold text-2xl"></i>
+        </p-card>
+      </div>
+    </div>
+  </section>
+  <section class="quick-actions mt-6">
+    <h2>Quick Actions</h2>
+    <div class="actions flex flex-row gap-2 my-3">
+      <p-card class="w-15rem flex-1">
+        <div class="flex flex-column h-5rem justify-content-around align-items-center gap-2">
+          <div class="p-2 bg-primary border-round-3xl">
+            <i class="pi pi-credit-card"></i>
+          </div>
+          <span>Send Money</span>
+        </div>
+      </p-card>
+      <p-card class="w-15rem flex-1">
+        <div class="flex flex-column h-5rem justify-content-around align-items-center gap-2">
+          <div class="p-2 bg-primary border-round-3xl">
+            <i class="pi pi-credit-card"></i>
+          </div>
+          <span>Send Money</span>
+        </div>
+      </p-card>
+      <p-card class="w-15rem flex-1">
+        <div class="flex flex-column h-5rem justify-content-around align-items-center gap-2">
+          <div class="p-2 bg-primary border-round-3xl">
+            <i class="pi pi-credit-card"></i>
+          </div>
+          <span>Send Money</span>
+        </div>
+      </p-card>
+      <p-card class="w-15rem flex-1">
+        <div class="flex flex-column h-5rem justify-content-around align-items-center gap-2">
+          <div class="p-2 bg-primary border-round-3xl">
+            <i class="pi pi-credit-card"></i>
+          </div>
+          <span>Send Money</span>
+        </div>
+      </p-card>
+    </div>
+  </section>
+  <section class="transactions mt-6">
+    <h2>Recent Transactions</h2>
+    <p-data-view [value]="transactions">
+      <ng-template #list let-items>
+        <div class="grid gap-3 grid-nogutter">
+          @for (transaction of items; track transaction.title) {
+            <p-card class="col-12">
+              <div class="flex align-items-center gap-4">
+                <div class="icon p-3 border-round bg-primary-300 w-min">
+                  <i class="pi pi-arrow-up-right"></i>
+                </div>
+                <div class="flex flex-column gap-2 flex-1">
+                  <span class="text-lg font-bold">{{ transaction.title }}</span>
+                  <div class="flex gap-2 align-items-center text-color-secondary">
+                    <i class="pi pi-calendar"></i>
+                    <span>{{ transaction.date?.toLocaleDateString() }}</span>
+                  </div>
+                </div>
+                <div [class.text-green-500]="transaction.direction === 'incoming'"
+                     [class.text-gray-500]="transaction.direction === 'outcoming'"
+                     class="text-lg font-bold"
+                >
+                  {{ transaction.direction === 'incoming' ? '+' : '-' }} {{ transaction.money }} $
+                </div>
+              </div>
+            </p-card>
+          }
+        </div>
+      </ng-template>
+    </p-data-view>
+  </section>
+</div>

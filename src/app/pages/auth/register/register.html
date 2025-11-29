@@ -1,23 +1,29 @@
 <div class="register-page">
-  <h3 class="mt-0">Register</h3>
-  <div class="fields mt-2">
-    <div class="email flex flex-column gap-1">
-      <label>Email</label>
-      <input pInputText type="email" placeholder="test@test.com"/>
-    </div>
-    <div class="password flex flex-column gap-1 mt-2">
-      <label>Password</label>
-      <p-password fluid placeholder="*******"/>
-    </div>
-    <div class="confirm-password flex flex-column gap-1 mt-2">
-      <label>Confirm Password</label>
-      <p-password fluid placeholder="*******"/>
+  <h3 class="my-0">Create Account</h3>
+  <p class="text-color-secondary">Join millions of users who trust Global Bank</p>
+  <div class="fields mt-4">
+    <app-labeled-input label="Email Address" class="mt-3">
+      <input pInputText type="email" placeholder="you@example.com"/>
+    </app-labeled-input>
+    <app-labeled-input label="Phone Number" class="mt-3">
+      <input pInputText type="text" placeholder="+38 (098) 765 43 21"/>
+    </app-labeled-input>
+    <div class="names flex justify-content-center gap-3 mt-3">
+      <app-labeled-input label="Password" class="flex-1">
+        <p-password fluid placeholder="*********"/>
+      </app-labeled-input>
+      <app-labeled-input label="Confirm Password" class="flex-1">
+        <p-password fluid placeholder="*********"/>
+      </app-labeled-input>
     </div>
   </div>
-  <div class="actions flex flex-column gap-2 mt-2">
+  <div class="actions flex flex-column gap-4 mt-4 align-items-center">
     <p-button class="w-full" fluid>Register</p-button>
-    <p-button routerLink="/auth/login" text class="white-space-nowrap" variant="outlined" fluid>
-      Already have an account? Login
-    </p-button>
+    <span class="flex align-content-center gap-1 text-center">
+      Already have an account?
+      <a routerLink="/auth/login">
+        Login
+      </a>
+    </span>
   </div>
 </div>
