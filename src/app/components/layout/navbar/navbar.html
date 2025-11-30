@@ -5,6 +5,25 @@
       <h2 class="name my-0 text-primary">Global Bank</h2>
     </div>
   </ng-template>
+  <ng-template #center>
+    <div class="menu">
+      <p-button
+        label="Dashboard"
+        link
+        routerLink="/dashboard"
+        routerLinkActive="active"
+        class="menu-item"
+      />
+      <p-button
+        label="Transfer"
+        link
+        routerLink="/transfer"
+        routerLinkActive="active"
+        class="menu-item"
+        [routerLinkActiveOptions]="{ exact: true }"
+      />
+    </div>
+  </ng-template>
   <ng-template #end>
     @if (isAuthenticated()) {
 

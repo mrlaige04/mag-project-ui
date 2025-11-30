@@ -29,7 +29,7 @@ export class Login extends BasePage {
   private destroyRef = inject(DestroyRef);
 
   public form = this.fb.group({
-    email: this.fb.control('', [Validators.required, Validators.email]),
+    phone: this.fb.control('', [Validators.required]),
     password: this.fb.control('', [Validators.required])
   });
 

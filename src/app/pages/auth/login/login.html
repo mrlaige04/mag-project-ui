@@ -4,11 +4,11 @@
 
   <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="fields mt-5">
-      <app-labeled-input label="Email Address">
-        <input pInputText type="email" placeholder="you@example.com" />
+      <app-labeled-input label="Phone Number">
+        <input pInputText formControlName="phone" type="text" placeholder="+380987654321" />
       </app-labeled-input>
       <app-labeled-input label="Password" class="mt-3">
-        <p-password fluid placeholder="*********" [feedback]="false"/>
+        <p-password fluid placeholder="*********" formControlName="password" [feedback]="false"/>
       </app-labeled-input>
     </div>
     <div class="pre-actions mt-2">

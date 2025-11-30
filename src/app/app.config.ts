@@ -1,14 +1,11 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { routes } from './app.routes';
 import {providePrimeNG} from 'primeng/config';
-import Aura from '@primeuix/themes/aura';
 import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {AppThemePreset} from '../preset';
 import {MessageService} from 'primeng/api';
-import {passTokenInterceptor} from './utils/interceptors/pass-token-interceptor';
 import {handleServerNotRespondingInterceptor} from './utils/interceptors/handle-server-not-responding-interceptor';
 import {DialogService} from 'primeng/dynamicdialog';
 
@@ -25,7 +22,6 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes),
     provideHttpClient(withInterceptors([
-      passTokenInterceptor,
       handleServerNotRespondingInterceptor
     ])),
     DialogService,

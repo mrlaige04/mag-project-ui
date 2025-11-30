@@ -5,6 +5,7 @@ import {BaseHttp} from '../base-http';
 import {RegisterRequest} from '../../modeles/auth/RegisterRequest';
 import {AccessToken} from '../../modeles/auth/AccessToken';
 import {StorageConfig} from '../../config/storage-config';
+import {tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,15 +14,14 @@ export class AuthService {
   private http = inject(BaseHttp);
   private readonly baseUrl = '/auth';
 
-  private _accessToken = signal<AccessToken | null>(this.getSavedToken());
-  public accessToken = this._accessToken.asReadonly();
-
-  private _isAuthenticated = signal(this._accessToken() !== null);
+  private _isAuthenticated = signal(false);
   public isAuthenticated = this._isAuthenticated.asReadonly();
 
   public login(request: LoginRequest) {
     const fullUrl = `${this.baseUrl}/login`;
-    return this.http.post(fullUrl, request);
+    return this.http.post(fullUrl, request, {
+      withCredentials: true
+    });
   }
 
   public register(request: RegisterRequest) {
@@ -30,24 +30,13 @@ export class AuthService {
   }
 
   public logout() {
-    localStorage.removeItem(StorageConfig.ACCESS_TOKEN);
-    this._accessToken.set(null);
-    this._isAuthenticated.set(false);
-
-    location.reload();
-  }
-
-  private getSavedToken(): AccessToken | null {
-    const storage = localStorage.getItem(StorageConfig.ACCESS_TOKEN);
-    if (!storage) {
-      return null;
-    }
-
-    const accessToken = JSON.parse(storage) as AccessToken;
-    if (!accessToken || !accessToken.access_token || !accessToken.refresh_token) {
-      return null;
-    }
-
-    return accessToken;
+    const fullUrl = `${this.baseUrl}/logout`;
+    return this.http.post(fullUrl, {}).pipe(
+      tap(res => {
+        if (res) {
+          location.reload();
+        }
+      })
+    );
   }
 }

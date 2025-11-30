@@ -82,6 +82,14 @@ export class MainDashboard extends BasePage {
     },
   ];
 
+  public quickActions: QuickAction[] = [
+    {
+      icon: 'pi pi-send',
+      displayName: 'Send Money',
+      onClick: this.sendMoney.bind(this),
+    }
+  ];
+
   public openNewCardDialog() {
     this.openNewCardDialogRef = this.dialogService.open<OpenNewCard>(OpenNewCard, {
       modal: true,
@@ -92,6 +100,10 @@ export class MainDashboard extends BasePage {
         width: 'min-content'
       }
     });
+  }
+
+  public async sendMoney() {
+    await this.router.navigate(['transfer']);
   }
 }
 
@@ -108,4 +120,10 @@ type UserCard = {
   balance: number;
   tags: string;
   isPrimary?: boolean;
+};
+
+type QuickAction = {
+  icon?: string;
+  displayName: string;
+  onClick: () => void;
 };
