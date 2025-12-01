@@ -1,29 +1,37 @@
 <div class="register-page">
   <h3 class="my-0">Create Account</h3>
   <p class="text-color-secondary">Join millions of users who trust Global Bank</p>
-  <div class="fields mt-4">
-    <app-labeled-input label="Email Address" class="mt-3">
-      <input pInputText type="email" placeholder="you@example.com"/>
-    </app-labeled-input>
-    <app-labeled-input label="Phone Number" class="mt-3">
-      <input pInputText type="text" placeholder="+38 (098) 765 43 21"/>
-    </app-labeled-input>
-    <div class="names flex justify-content-center gap-3 mt-3">
-      <app-labeled-input label="Password" class="flex-1">
-        <p-password fluid placeholder="*********"/>
+  <form [formGroup]="form" (ngSubmit)="register()">
+    <div class="fields mt-4">
+      <app-labeled-input label="Full Name" class="flex-1">
+        <input formControlName="fullName" pInputText type="text" placeholder="John Barber"/>
       </app-labeled-input>
-      <app-labeled-input label="Confirm Password" class="flex-1">
-        <p-password fluid placeholder="*********"/>
+      <app-labeled-input label="Email Address" class="mt-3">
+        <input formControlName="email" pInputText type="email" placeholder="you@example.com"/>
       </app-labeled-input>
+      <app-labeled-input label="Phone Number" class="mt-3">
+        <input formControlName="phone" pInputText type="text" placeholder="+38 (098) 765 43 21"/>
+      </app-labeled-input>
+      <app-labeled-input label="Date of Birth" class="mt-3">
+        <p-date-picker formControlName="dateOfBirth" fluid placeholder="01/01/2000"/>
+      </app-labeled-input>
+      <div class="password flex justify-content-center gap-3 mt-3">
+        <app-labeled-input label="Password" class="flex-1">
+          <p-password formControlName="password" fluid placeholder="*********"/>
+        </app-labeled-input>
+        <app-labeled-input label="Confirm Password" class="flex-1">
+          <p-password formControlName="confirmPassword" fluid placeholder="*********"/>
+        </app-labeled-input>
+      </div>
     </div>
-  </div>
-  <div class="actions flex flex-column gap-4 mt-4 align-items-center">
-    <p-button class="w-full" fluid>Register</p-button>
-    <span class="flex align-content-center gap-1 text-center">
+    <div class="actions flex flex-column gap-4 mt-4 align-items-center">
+      <p-button [disabled]="!form.valid" class="w-full" fluid type="submit">Register</p-button>
+      <span class="flex align-content-center gap-1 text-center">
       Already have an account?
       <a routerLink="/auth/login">
         Login
       </a>
     </span>
-  </div>
+    </div>
+  </form>
 </div>

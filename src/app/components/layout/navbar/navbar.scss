@@ -9,3 +9,14 @@
   right: 0;
   width: 100%;
 }
+
+
+::ng-deep .menu-item {
+  .p-button {
+    color: var(--p-surface-200) !important;
+  }
+
+  &.active .p-button {
+    color: var(--p-primary-500) !important;
+  }
+}

@@ -33,38 +33,16 @@
   <section class="quick-actions mt-6">
     <h2>Quick Actions</h2>
     <div class="actions flex flex-row gap-2 my-3">
-      <p-card class="w-15rem flex-1">
-        <div class="flex flex-column h-5rem justify-content-around align-items-center gap-2">
-          <div class="p-2 bg-primary border-round-3xl">
-            <i class="pi pi-credit-card"></i>
+      @for (action of quickActions; track action.displayName) {
+        <p-card class="w-15rem cursor-pointer" (click)="action.onClick()">
+          <div class="flex flex-column h-4rem justify-content-around align-items-center gap-2">
+            <div class="p-2 bg-primary border-round-3xl">
+              <i [class]="action.icon"></i>
+            </div>
+            <span>{{ action.displayName }}</span>
           </div>
-          <span>Send Money</span>
-        </div>
-      </p-card>
-      <p-card class="w-15rem flex-1">
-        <div class="flex flex-column h-5rem justify-content-around align-items-center gap-2">
-          <div class="p-2 bg-primary border-round-3xl">
-            <i class="pi pi-credit-card"></i>
-          </div>
-          <span>Send Money</span>
-        </div>
-      </p-card>
-      <p-card class="w-15rem flex-1">
-        <div class="flex flex-column h-5rem justify-content-around align-items-center gap-2">
-          <div class="p-2 bg-primary border-round-3xl">
-            <i class="pi pi-credit-card"></i>
-          </div>
-          <span>Send Money</span>
-        </div>
-      </p-card>
-      <p-card class="w-15rem flex-1">
-        <div class="flex flex-column h-5rem justify-content-around align-items-center gap-2">
-          <div class="p-2 bg-primary border-round-3xl">
-            <i class="pi pi-credit-card"></i>
-          </div>
-          <span>Send Money</span>
-        </div>
-      </p-card>
+        </p-card>
+      }
     </div>
   </section>
   <section class="transactions mt-6">
