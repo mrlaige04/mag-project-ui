@@ -79,5 +79,9 @@
     @if (!faEnabled() && faSetupState() === SetupState.None) {
       <p-button label="Setup 2FA" (onClick)="generateSetupConfig()"/>
     }
+
+    @if (faEnabled()) {
+      <p-button label="Disable 2FA" (onClick)="disable2fa()" severity="danger"/>
+    }
   </p-card>
 </div>

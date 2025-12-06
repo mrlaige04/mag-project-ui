@@ -46,6 +46,7 @@ export const routes: Routes = [
         path: 'verification',
         component: Verification,
         title: 'Account verification',
+        canActivate: [isAuthenticatedGuard],
       },
       {
         path: 'logout',

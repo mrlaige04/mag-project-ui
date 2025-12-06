@@ -8,6 +8,7 @@ import {LabeledInput} from '../../../components/forms';
 import {Password} from 'primeng/password';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {tap} from 'rxjs';
+import {CustomValidators} from '../../../utils/validators/custom-validators';
 
 @Component({
   selector: 'app-change-password',
@@ -30,7 +31,10 @@ export class ChangePassword extends BasePage {
 
   public form = this.fb.group({
     password: this.fb.control('', [Validators.required]),
-    confirmPassword: this.fb.control('', [Validators.required]),
+    confirmPassword: this.fb.control('', [
+      Validators.required,
+      CustomValidators.Match('password')
+    ]),
   });
 
   public submit() {

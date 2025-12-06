@@ -13,6 +13,7 @@ import {VerificationStatus} from '../../../modeles/verification/VerificationStat
 import {DocumentStatus} from '../../../modeles/verification/Document';
 import {Message} from 'primeng/message';
 import {NgTemplateOutlet} from '@angular/common';
+import {AuthService} from '../../../services/auth/auth-service';
 
 @Component({
   selector: 'app-verification',
@@ -30,6 +31,7 @@ import {NgTemplateOutlet} from '@angular/common';
 })
 export class Verification extends BasePage implements OnInit {
   private verificationService = inject(VerificationService);
+  private authService = inject(AuthService);
   private destroyRef = inject(DestroyRef);
 
   public form = this.fb.group({
@@ -42,8 +44,6 @@ export class Verification extends BasePage implements OnInit {
   } | null>(null);
 
   public showForm = signal<boolean>(true);
-
-  public alreadyExistingVerificationStatus = signal<VerificationStatus | null>(null);
 
   public ngOnInit() {
     this.verificationService.checkVerificationStatus().pipe(
@@ -119,6 +119,11 @@ export class Verification extends BasePage implements OnInit {
       takeUntilDestroyed(this.destroyRef),
       finalize(() => this.isLoading.set(false))
     ).subscribe();
+  }
+
+  public logoutWithAnotherAccount() {
+    this.authService.logout();
+    this.router.navigate(['auth', 'logout']);
   }
 }
 

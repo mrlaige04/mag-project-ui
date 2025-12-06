@@ -82,6 +82,17 @@ export class Setup2fa extends BasePage implements OnInit {
     this.authService.enable2fa(this.faCode()).pipe(
       tap(() => {
         this.faSetupState.set(SetupState.Finish);
+        this.faEnabled.set(true);
+      }),
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe();
+  }
+
+  public disable2fa() {
+    this.authService.disable2fa().pipe(
+      tap(() => {
+        this.faSetupState.set(SetupState.None);
+        this.faEnabled.set(false);
       }),
       takeUntilDestroyed(this.destroyRef),
     ).subscribe();

@@ -1,5 +1,40 @@
 <div class="user-profile-info-page">
-  <p-card [header]="currentUser()?.fullName">
+  <p-card>
+    <ng-template #title>
+      <div class="flex gap-2 align-items-center">
+        <h3 class="my-0">{{ currentUser()?.fullName }}</h3>
+        <p-tag [severity]="userStatusTagSeverity">{{ currentUser()?.status }}</p-tag>
+      </div>
+    </ng-template>
+    <form [formGroup]="form" class="mt-2" (ngSubmit)="submit()">
+      <div class="grid gap-2 grid-nogutter flex-nowrap">
+        <div class="col-6">
+          <div class="flex flex-column gap-2">
+            <app-labeled-input label="Email">
+              <input pInputText type="email" formControlName="email"/>
+            </app-labeled-input>
 
+            <app-labeled-input label="Full Name">
+              <input pInputText type="text" formControlName="fullName"/>
+            </app-labeled-input>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="flex flex-column gap-2">
+            <app-labeled-input label="Phone">
+              <input pInputText type="text" formControlName="phone"/>
+            </app-labeled-input>
+
+            <app-labeled-input label="Date of Birth">
+              <p-date-picker formControlName="dateOfBirth" fluid/>
+            </app-labeled-input>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions mt-3">
+        <p-button label="Save" type="submit" [disabled]="!form.valid || form.untouched"/>
+      </div>
+    </form>
   </p-card>
 </div>
