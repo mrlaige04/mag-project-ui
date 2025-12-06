@@ -1,6 +1,5 @@
 import {Component, DestroyRef, inject, OnInit, signal} from '@angular/core';
 import {Card} from 'primeng/card';
-import {Chip} from 'primeng/chip';
 import {DataView} from 'primeng/dataview';
 import {BasePage} from '../../../components/common/base-page/base-page';
 import {OpenNewCard} from '../../card/open-new-card/open-new-card';
@@ -9,7 +8,7 @@ import {RouterLink} from '@angular/router';
 import {CardService} from '../../../services/cards/card-service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {PaymentService} from '../../../services/payments/payment-service';
-import {tap} from 'rxjs';
+import {forkJoin, switchMap, tap} from 'rxjs';
 import {Payment} from '../../../modeles/payments/Payment';
 import {UserCard} from '../../../modeles/cards/Card';
 import {DecimalPipe} from '@angular/common';
@@ -18,7 +17,6 @@ import {DecimalPipe} from '@angular/common';
   selector: 'app-main-dashboard',
   imports: [
     Card,
-    Chip,
     DataView,
     RouterLink,
     DecimalPipe
@@ -36,16 +34,13 @@ export class MainDashboard extends BasePage implements OnInit {
   public cards = signal<UserCard[]>([]);
 
   public ngOnInit(): void {
-    this.cardsService.getAllCards().pipe(
-      tap(cards => {
-        this.cards.set(cards);
-      }),
-      takeUntilDestroyed(this.destroyRef),
-    ).subscribe();
-
-    this.paymentService.getAllPayments().pipe(
-      tap(payments => {
-        this.transactions.set(payments);
+    forkJoin({
+      cards: this.loadCards$(),
+      transactions: this.loadTransactions$()
+    }).pipe(
+      tap((res) => {
+        this.cards.set(res.cards);
+        this.transactions.set(res.transactions);
       }),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe();
@@ -69,6 +64,29 @@ export class MainDashboard extends BasePage implements OnInit {
         width: 'min-content'
       }
     });
+
+    this.openNewCardDialogRef?.onClose.pipe(
+      switchMap(() => this.loadCards$()),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe();
+  }
+
+  private loadCards$() {
+    return this.cardsService.getAllCards().pipe(
+      tap(cards => {
+        this.cards.set(cards);
+      }),
+      takeUntilDestroyed(this.destroyRef),
+    );
+  }
+
+  private loadTransactions$() {
+    return this.paymentService.getAllPayments().pipe(
+      tap(payments => {
+        this.transactions.set(payments);
+      }),
+      takeUntilDestroyed(this.destroyRef)
+    );
   }
 
   public async sendMoney() {
