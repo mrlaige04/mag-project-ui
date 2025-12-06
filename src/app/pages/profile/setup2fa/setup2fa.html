@@ -1,0 +1,83 @@
+<div class="setup2fa-page">
+  <p-card>
+    <ng-template #title>
+      <div class="flex gap-2 align-items-center">
+        <h3 class="my-0">Two-Factor Authentication</h3>
+        <p-tag [severity]="faEnabled() ? 'success' : 'danger'">
+          {{ faEnabled() ? 'Enabled' : 'Disabled' }}
+        </p-tag>
+      </div>
+    </ng-template>
+    <p class="text-color-secondary">
+      Two-Factor Authentication (2FA) significantly strengthens account security by requiring users to verify their
+      identity using two separate factors—typically something they know (a password) and something they have
+      (a mobile device or authentication app).
+      This added layer of protection greatly reduces the risk of unauthorized access, even if a password is compromised.
+    </p>
+
+    @if (faSetupState() !== SetupState.None) {
+      <p-stepper [value]="faSetupState()" [linear]="true" >
+        <p-step-list>
+          <p-step [value]="SetupState.QRCode">QR Code</p-step>
+          <p-step [value]="SetupState.Code">Code</p-step>
+          <p-step [value]="SetupState.Finish">Finish</p-step>
+        </p-step-list>
+        <p-step-panels>
+          <p-step-panel [value]="SetupState.QRCode">
+            <ng-template #content let-activateCallback="activateCallback">
+              <div class="qrcode">
+                @if (qrCodeConfig()) {
+                  <div class="flex flex-column justify-content-center align-items-stretch w-min m-auto">
+                    <div class="flex gap-2 justify-content-center w-full">
+                      <qrcode [qrdata]="qrCodeConfig()!.otpauth_url" [width]="256"/>
+                      <p-divider layout="vertical"/>
+                      <div class="copy">
+                        <h3 class="my-0">Or copy the secret</h3>
+                        <div class="bg-gray-800 mt-2 p-0 px-2 border-round flex gap-2 align-items-center">
+                          <p class="">{{ qrCodeConfig()!.secret.slice(0, 25) }}...</p>
+                          <p-button text icon="pi pi-copy" (onClick)="copyToClipboard(qrCodeConfig()?.secret!)"/>
+                        </div>
+                      </div>
+                    </div>
+
+                    <p-button label="Next"
+                              icon="pi pi-arrow-right" iconPos="right" styleClass="mt-4 w-full"
+                              (onClick)="goToCode()"/>
+                  </div>
+                }
+              </div>
+            </ng-template>
+          </p-step-panel>
+          <p-step-panel [value]="SetupState.Code">
+            <ng-template #content let-activateCallback="activateCallback">
+              <div class="flex flex-column justify-content-center align-items-stretch w-min m-auto">
+                <h3 class="my-1 white-space-nowrap">Enter the code from your Authenticator App</h3>
+
+                <app-labeled-input label="Code" class="mt-2">
+                  <input pInputText [(ngModel)]="faCode" type="text" placeholder="Example: 123 456"/>
+                </app-labeled-input>
+
+                <p-button label="Next"
+                          icon="pi pi-arrow-right"
+                          iconPos="right"
+                          styleClass="mt-4 w-full"
+                          [disabled]="!faCode() || !faCode().length"
+                          (onClick)="enable2fa()"/>
+
+                <p-button label="Back"
+                          icon="pi pi-arrow-left"
+                          outlined styleClass="mt-1 w-full"
+                          (onClick)="goToStep(SetupState.QRCode)"/>
+              </div>
+            </ng-template>
+          </p-step-panel>
+          <p-step-panel [value]="SetupState.Finish"></p-step-panel>
+        </p-step-panels>
+      </p-stepper>
+    }
+
+    @if (!faEnabled() && faSetupState() === SetupState.None) {
+      <p-button label="Setup 2FA" (onClick)="generateSetupConfig()"/>
+    }
+  </p-card>
+</div>

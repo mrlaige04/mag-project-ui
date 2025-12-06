@@ -42,7 +42,7 @@ export class OpenNewCard extends BasePage {
   private destroyRef = inject(DestroyRef);
 
   public form = this.fb.group({
-    type: this.fb.control('debit', [Validators.required]),
+    cardType: this.fb.control('debit', [Validators.required]),
     provider: this.fb.control('visa', [Validators.required]),
     agreeTerms: this.fb.control(false, [Validators.required, Validators.requiredTrue]),
   });
@@ -74,7 +74,7 @@ export class OpenNewCard extends BasePage {
   ];
 
   public get activeType() {
-    const type = this.availableTypes.find(t => t.name === this.form.get('type')?.value);
+    const type = this.availableTypes.find(t => t.name === this.form.get('cardType')?.value);
     return type ?? this.availableTypes[0];
   }
 

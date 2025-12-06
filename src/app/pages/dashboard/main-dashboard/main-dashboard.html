@@ -47,7 +47,7 @@
   </section>
   <section class="transactions mt-6">
     <h2>Recent Transactions</h2>
-    <p-data-view [value]="transactions">
+    <p-data-view [value]="transactions()" emptyMessage="No transactions">
       <ng-template #list let-items>
         <div class="grid gap-3 grid-nogutter">
           @for (transaction of items; track transaction.title) {

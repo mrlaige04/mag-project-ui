@@ -1,37 +1,45 @@
 <div class="verification-page">
   <h3 class="my-0 text-2xl">Account Verification</h3>
   <p class="text-color-secondary">
-    In order to use our bank system you need to verify your account. <br/> You can choose of available document types
+    In order to use our bank system you need to verify your account.
   </p>
 
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <div class="fields mt-5">
-      <app-labeled-input label="Document Type">
-        <p-select-button formControlName="documentType" fluid [options]="availableDocumentTypes" optionValue="documentType">
-          <ng-template #item let-item>
-            <div class="flex gap-3 align-items-center">
-              <i [class]="item.icon"></i>
-              {{ item.displayName }}
-            </div>
-          </ng-template>
-        </p-select-button>
-      </app-labeled-input>
+  @if (!!alert()) {
+    <p-message [severity]="alert()?.severity" size="small" [style]="{'width': 'min-content'}">
+      {{ alert()?.message }}
+    </p-message>
+  }
 
-      <app-labeled-input label="File" class="mt-3">
-        <p-fileupload name="demo[]" maxFileSize="1000000" mode="advanced"
-                      [auto]="false" [customUpload]="true"
-                      (onSelect)="onDocumentSelect($event)"
-                      [showUploadButton]="false" [previewWidth]="0">
-          <ng-template #empty>
-            <div>Drag and drop files to here to upload.</div>
-          </ng-template>
-        </p-fileupload>
-      </app-labeled-input>
-    </div>
-    <div class="actions flex flex-column gap-4 mt-3 align-items-center">
-      <p-button [disabled]="!isFormValid" type="submit" [loading]="isLoading()" class="w-full" fluid>
-        Submit
-      </p-button>
-    </div>
-  </form>
+  @if (showForm()) {
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="fields mt-5">
+        <app-labeled-input label="Document Type">
+          <p-select-button formControlName="documentType" fluid [options]="availableDocumentTypes" optionValue="documentType">
+            <ng-template #item let-item>
+              <div class="flex gap-3 align-items-center">
+                <i [class]="item.icon"></i>
+                {{ item.displayName }}
+              </div>
+            </ng-template>
+          </p-select-button>
+        </app-labeled-input>
+
+        <app-labeled-input label="File" class="mt-3">
+          <p-fileupload name="demo[]" maxFileSize="1000000" mode="advanced"
+                        [auto]="false" [customUpload]="true"
+                        (onSelect)="onDocumentSelect($event)"
+                        [showUploadButton]="false" [previewWidth]="0">
+            <ng-template #empty>
+              <div>Drag and drop files to here to upload.</div>
+            </ng-template>
+          </p-fileupload>
+        </app-labeled-input>
+      </div>
+      <div class="actions flex flex-column gap-4 mt-3 align-items-center">
+        <p-button [disabled]="!isFormValid" type="submit" [loading]="isLoading()" class="w-full" fluid>
+          Submit
+        </p-button>
+      </div>
+    </form>
+  }
 </div>
