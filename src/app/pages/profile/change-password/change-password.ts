@@ -1,4 +1,4 @@
-import {Component, DestroyRef, inject, NgZone} from '@angular/core';
+import {Component, DestroyRef, inject} from '@angular/core';
 import {Card} from 'primeng/card';
 import {BasePage} from '../../../components/common/base-page/base-page';
 import {UserService} from '../../../services/user/user-service';
