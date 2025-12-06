@@ -36,7 +36,7 @@ export class UserService {
 
   public update(id: string, request: Partial<UpdateUser>) {
     const fullUrl = `${this.baseUrl}/${id}`;
-    return this.base.put(fullUrl, request);
+    return this.base.patch(fullUrl, request);
   }
 
   public clearUser() {

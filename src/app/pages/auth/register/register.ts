@@ -11,6 +11,7 @@ import {RegisterRequest} from '../../../modeles/auth/RegisterRequest';
 import {DatePicker} from 'primeng/datepicker';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {catchError, finalize, of, tap} from 'rxjs';
+import {CustomValidators} from '../../../utils/validators/custom-validators';
 
 @Component({
   selector: 'app-register',
@@ -36,7 +37,7 @@ export class Register extends BasePage {
     phone: this.fb.control('', [Validators.required]),
     dateOfBirth: this.fb.control(new Date(), [Validators.required]),
     password: this.fb.control('', [Validators.required]),
-    confirmPassword: this.fb.control('', [Validators.required])
+    confirmPassword: this.fb.control('', [Validators.required, CustomValidators.Match('password')])
   });
 
   public register() {

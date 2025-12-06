@@ -73,7 +73,7 @@ export class MainDashboard extends BasePage implements OnInit {
       header: "Open New Card",
       closable: true,
       style: {
-        minWidth: '30vw',
+        minWidth: '50vw',
         width: 'min-content'
       }
     });
