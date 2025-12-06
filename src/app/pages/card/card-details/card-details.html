@@ -1,6 +1,6 @@
 <div class="card-details-page py-4">
   <div class="grid">
-    <div class="card-preview col-7">
+    <div class="card-preview md:col-6 col-12">
       <p-card class="bg-white mx-auto text-black-alpha-80">
         <ng-template #title>
           <div class="flex justify-content-between align-items-start">
@@ -12,11 +12,11 @@
         <ng-template #footer>
           <div class="flex justify-content-between gap-5 align-items-end">
             <div class="w-full text-xl font-semibold text-black-alpha-90">
-              <div class="holder_exp flex justify-content-between">
+              <p class="number my-1 w-full text-left">4242 4242 4242 4242</p>
+              <div class="holder_exp flex gap-2">
                 <p class="holder my-0">John Barber</p>
                 <p class="exp my-0">08/11</p>
               </div>
-              <p class="number my-0 w-full text-left">4242 4242 4242 4242</p>
             </div>
             <div class="provider">
               <img src="./images/mastercard.png" height="50"/>
@@ -26,7 +26,7 @@
       </p-card>
     </div>
 
-    <div class="transactions col-5">
+    <div class="transactions md:col-6 col-12">
       <p-card class="h-full">
         <ng-template #title>
           <span class="text-xl font-bold">Transactions</span>

@@ -26,7 +26,8 @@
   </ng-template>
   <ng-template #end>
     @if (isAuthenticated()) {
-
+      <p-menu popup #userMenu [model]="userMenuItems" />
+      <p-avatar [label]="avatarLabel" (click)="userMenu.toggle($event)" class="cursor-pointer"/>
     } @else {
       <p-button routerLink="/auth/login">Login</p-button>
     }

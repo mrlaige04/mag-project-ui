@@ -8,6 +8,8 @@ import {AppThemePreset} from '../preset';
 import {MessageService} from 'primeng/api';
 import {handleServerNotRespondingInterceptor} from './utils/interceptors/handle-server-not-responding-interceptor';
 import {DialogService} from 'primeng/dynamicdialog';
+import {passTokenInterceptor} from './utils/interceptors/pass-token-interceptor';
+import {handleUnauthorizedInterceptor} from './utils/interceptors/handle-unauthorized-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,7 +24,9 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes),
     provideHttpClient(withInterceptors([
-      handleServerNotRespondingInterceptor
+      handleServerNotRespondingInterceptor,
+      handleUnauthorizedInterceptor,
+      passTokenInterceptor
     ])),
     DialogService,
     MessageService

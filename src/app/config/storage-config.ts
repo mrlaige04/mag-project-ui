@@ -1,3 +1,3 @@
 export enum StorageConfig {
-  ACCESS_TOKEN = 'user-token'
+  ACCESS_TOKEN = 'user-token',
 }

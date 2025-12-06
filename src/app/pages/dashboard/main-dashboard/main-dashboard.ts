@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, DestroyRef, inject, OnInit, signal} from '@angular/core';
 import {Card} from 'primeng/card';
 import {Chip} from 'primeng/chip';
 import {DataView} from 'primeng/dataview';
@@ -7,6 +7,11 @@ import {OpenNewCard} from '../../card/open-new-card/open-new-card';
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
 import {Button} from 'primeng/button';
 import {RouterLink} from '@angular/router';
+import {CardService} from '../../../services/cards/card-service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {PaymentService} from '../../../services/payments/payment-service';
+import {tap} from 'rxjs';
+import {Payment} from '../../../modeles/payments/Payment';
 
 @Component({
   selector: 'app-main-dashboard',
@@ -14,59 +19,31 @@ import {RouterLink} from '@angular/router';
     Card,
     Chip,
     DataView,
-    Button,
     RouterLink
   ],
   templateUrl: './main-dashboard.html',
   styleUrl: './main-dashboard.scss',
 })
-export class MainDashboard extends BasePage {
+export class MainDashboard extends BasePage implements OnInit {
   private openNewCardDialogRef: DynamicDialogRef<OpenNewCard> | null = null;
+  private cardsService = inject(CardService);
+  private paymentService = inject(PaymentService);
+  private destroyRef = inject(DestroyRef);
 
-  public transactions: Transaction[] = [
-    {
-      direction: 'incoming',
-      money: 100,
-      title: "From Deposit",
-      date: new Date()
-    },
-    {
-      direction: 'outcoming',
-      money: 5000,
-      title: "Credit",
-      date: new Date()
-    },{
-      direction: 'outcoming',
-      money: 5000,
-      title: "Credit",
-      date: new Date()
-    },{
-      direction: 'outcoming',
-      money: 5000,
-      title: "Credit",
-      date: new Date()
-    },{
-      direction: 'outcoming',
-      money: 5000,
-      title: "Credit",
-      date: new Date()
-    },{
-      direction: 'outcoming',
-      money: 5000,
-      title: "Credit",
-      date: new Date()
-    },{
-      direction: 'outcoming',
-      money: 5000,
-      title: "Credit",
-      date: new Date()
-    },{
-      direction: 'outcoming',
-      money: 5000,
-      title: "Credit",
-      date: new Date()
-    }
-  ];
+  public transactions = signal<Payment[]>([]);
+
+  public ngOnInit(): void {
+    this.cardsService.getAllCards().pipe(
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe();
+
+    this.paymentService.getAllPayments().pipe(
+      tap(payments => {
+        this.transactions.set(payments);
+      }),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe();
+  }
 
   public cards: UserCard[] = [
     {

@@ -12,6 +12,8 @@ import {isAuthenticatedGuard} from './utils/guard/is-authenticated-guard';
 import {isNotAuthenticatedGuard} from './utils/guard/is-not-authenticated-guard';
 import {CardDetails} from './pages/card/card-details/card-details';
 import {Verification} from './pages/auth/verification/verification';
+import {userVerifiedGuard} from './utils/guard/user-verified-guard';
+import {ProfileWrapper} from './pages/profile/profile-wrapper/profile-wrapper';
 
 export const routes: Routes = [
   {
@@ -49,7 +51,7 @@ export const routes: Routes = [
         path: 'logout',
         redirectTo: () => {
           const authService = inject(AuthService);
-          authService.logout().subscribe();
+          authService.logout();
           return '/';
         }
       }
@@ -58,7 +60,7 @@ export const routes: Routes = [
   {
     path: '',
     component: LayoutWrapper,
-    canActivate: [], //isAuthenticatedGuard],
+    canActivate: [isAuthenticatedGuard, userVerifiedGuard],
     children: [
       {
         path: '',
@@ -74,6 +76,11 @@ export const routes: Routes = [
         path: 'cards/:id',
         title: 'Card Details',
         component: CardDetails,
+      },
+      {
+        path: 'profile',
+        title: 'Profile',
+        component: ProfileWrapper
       }
     ]
   }

@@ -1,7 +1,7 @@
 <div class="open-new-card-page">
   <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="type">
-      <p-select-button optionValue="name" size="large" formControlName="type" fluid [options]="availableTypes">
+      <p-select-button optionValue="name" size="large" formControlName="cardType" fluid [options]="availableTypes">
         <ng-template #item let-item>
           {{ item.displayName ?? item.name }}
         </ng-template>

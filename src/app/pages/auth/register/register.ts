@@ -41,7 +41,7 @@ export class Register extends BasePage {
 
   public register() {
     if (!this.form.valid) {
-      //return;
+      return;
     }
 
     this.isLoading.set(true);
