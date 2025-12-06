@@ -41,7 +41,9 @@ export class ChangePassword extends BasePage {
     this.userService.update(this.currentUser()!.id, {
       password: this.form.value.password!
     }).pipe(
-      tap(() => location.reload()),
+      tap(() => {
+        this.form.reset();
+      }),
       takeUntilDestroyed(this.destroyRef),
     ).subscribe();
   }
