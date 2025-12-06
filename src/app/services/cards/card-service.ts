@@ -35,4 +35,9 @@ export class CardService {
     const url = this.baseUrl;
     return this.base.get<UserCard[]>(url);
   }
+
+  public getById(id: string) {
+    const url = this.baseUrl + `/${id}`;
+    return this.base.get<UserCard>(url);
+  }
 }

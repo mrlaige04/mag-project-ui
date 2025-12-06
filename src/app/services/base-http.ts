@@ -43,6 +43,6 @@ export class BaseHttp {
   }
 
   private getFullUrl(path: string) {
-    return new URL(this.baseUrl + path).toString().replace('//', '/');
+    return new URL(this.baseUrl + path).toString();
   }
 }
