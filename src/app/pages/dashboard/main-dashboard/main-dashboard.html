@@ -1,22 +1,22 @@
 <div class="main-dashboard-page">
   <section class="balance-and-cards">
     <p class="text-color-secondary text-lg my-2">Total Balance</p>
-    <strong class="text-5xl">$57,650.80</strong>
+    <strong class="text-5xl">{{ currency }} {{ totalBalance | number:'1.0-0' }}</strong>
     <div class="cards flex flex-row gap-3 my-4">
-      @for (card of cards; track card.number) {
+      @for (card of cards(); track card.cardNumber) {
         <div class="card-wrapper">
-          <p-card routerLink="/cards/1" class="card w-20rem h-10rem" [class.bg-primary]="card.isPrimary === true">
+          <p-card routerLink="/cards/{{ card.id }}" class="card w-20rem h-10rem">
             <ng-template #title>
               <div class="flex justify-content-between align-items-center">
                 <i class="pi pi-credit-card text-2xl"></i>
                 <span class="tags">
-                  <p-chip [label]="card.tags" class="px-2 py-1 text-sm"/>
+<!--                  <p-chip class="px-2 py-1 text-sm"/>-->
                 </span>
               </div>
             </ng-template>
-            <strong class="text-2xl my-3 block">${{ card.balance }}</strong>
+            <strong class="text-2xl my-3 block">{{ card.currency }} {{ card.balance }}</strong>
             <ng-template #footer>
-              <i>**** {{ card.number.slice(-4) }}</i>
+              <i>**** {{ card.cardNumber.slice(-4) }}</i>
             </ng-template>
           </p-card>
         </div>

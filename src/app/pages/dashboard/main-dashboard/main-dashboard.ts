@@ -5,13 +5,14 @@ import {DataView} from 'primeng/dataview';
 import {BasePage} from '../../../components/common/base-page/base-page';
 import {OpenNewCard} from '../../card/open-new-card/open-new-card';
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
-import {Button} from 'primeng/button';
 import {RouterLink} from '@angular/router';
 import {CardService} from '../../../services/cards/card-service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {PaymentService} from '../../../services/payments/payment-service';
 import {tap} from 'rxjs';
 import {Payment} from '../../../modeles/payments/Payment';
+import {UserCard} from '../../../modeles/cards/Card';
+import {DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'app-main-dashboard',
@@ -19,7 +20,8 @@ import {Payment} from '../../../modeles/payments/Payment';
     Card,
     Chip,
     DataView,
-    RouterLink
+    RouterLink,
+    DecimalPipe
   ],
   templateUrl: './main-dashboard.html',
   styleUrl: './main-dashboard.scss',
@@ -31,9 +33,13 @@ export class MainDashboard extends BasePage implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   public transactions = signal<Payment[]>([]);
+  public cards = signal<UserCard[]>([]);
 
   public ngOnInit(): void {
     this.cardsService.getAllCards().pipe(
+      tap(cards => {
+        this.cards.set(cards);
+      }),
       takeUntilDestroyed(this.destroyRef),
     ).subscribe();
 
@@ -44,20 +50,6 @@ export class MainDashboard extends BasePage implements OnInit {
       takeUntilDestroyed(this.destroyRef)
     ).subscribe();
   }
-
-  public cards: UserCard[] = [
-    {
-      number: '4242424242424242',
-      balance: 500,
-      tags: "Primary",
-      isPrimary: true
-    },
-    {
-      number: '4242424242424242',
-      balance: 500,
-      tags: "Savings",
-    },
-  ];
 
   public quickActions: QuickAction[] = [
     {
@@ -82,22 +74,15 @@ export class MainDashboard extends BasePage implements OnInit {
   public async sendMoney() {
     await this.router.navigate(['transfer']);
   }
+
+  public get currency() {
+    return this.cards().length ? this.cards()[0]?.currency : '$';
+  }
+
+  public get totalBalance() {
+     return this.cards().reduce((sum, x) => sum + x.balance, 0);
+  }
 }
-
-type Transaction = {
-  direction: 'outcoming' | 'incoming';
-  money: number;
-  title: string;
-  icon?: string;
-  date: Date;
-};
-
-type UserCard = {
-  number: string;
-  balance: number;
-  tags: string;
-  isPrimary?: boolean;
-};
 
 type QuickAction = {
   icon?: string;
