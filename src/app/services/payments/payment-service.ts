@@ -18,8 +18,9 @@ export class PaymentService {
     return this.base.get<Payment[]>(url);
   }
 
-  public getPaymentsForCard() {
-
+  public getPaymentsForCard(number: string) {
+    const fullUrl = `${this.baseUrl}/history/${number}`;
+    return this.base.get<Payment[]>(fullUrl);
   }
 
   public getPaymentById() {

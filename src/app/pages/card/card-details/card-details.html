@@ -4,7 +4,7 @@
       <p-card class="bg-white mx-auto text-black-alpha-80">
         <ng-template #title>
           <div class="flex justify-content-between align-items-start">
-            <h4 class="my-0">Super Mega Card</h4>
+            <h4 class="my-0">{{ card()?.cardType }} card</h4>
             <img src="./images/nfc.png" height="30"/>
           </div>
         </ng-template>
@@ -12,10 +12,9 @@
         <ng-template #footer>
           <div class="flex justify-content-between gap-5 align-items-end">
             <div class="w-full text-xl font-semibold text-black-alpha-90">
-              <p class="number my-1 w-full text-left">4242 4242 4242 4242</p>
+              <p class="number my-1 w-full text-left">{{ card()?.cardNumber! | cardNumber }}</p>
               <div class="holder_exp flex gap-2">
-                <p class="holder my-0">John Barber</p>
-                <p class="exp my-0">08/11</p>
+                <p class="exp my-0">{{ card()?.expirationDate! | expiry }}</p>
               </div>
             </div>
             <div class="provider">

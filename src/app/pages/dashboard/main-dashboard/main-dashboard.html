@@ -5,7 +5,7 @@
     <div class="cards flex flex-row gap-3 my-4">
       @for (card of cards(); track card.cardNumber) {
         <div class="card-wrapper">
-          <p-card routerLink="/cards/{{ card.id }}" class="card w-20rem h-10rem">
+          <p-card routerLink="/cards/{{ card.id }}" class="card w-20rem h-10rem bg-white text-black-alpha-90">
             <ng-template #title>
               <div class="flex justify-content-between align-items-center">
                 <i class="pi pi-credit-card text-2xl"></i>
