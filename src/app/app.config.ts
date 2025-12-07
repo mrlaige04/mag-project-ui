@@ -5,7 +5,7 @@ import {providePrimeNG} from 'primeng/config';
 import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {AppThemePreset} from '../preset';
-import {MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {handleServerNotRespondingInterceptor} from './utils/interceptors/handle-server-not-responding-interceptor';
 import {DialogService} from 'primeng/dynamicdialog';
 import {passTokenInterceptor} from './utils/interceptors/pass-token-interceptor';
@@ -29,6 +29,7 @@ export const appConfig: ApplicationConfig = {
       passTokenInterceptor
     ])),
     DialogService,
-    MessageService
+    MessageService,
+    ConfirmationService
   ]
 };

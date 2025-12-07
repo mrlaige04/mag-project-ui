@@ -24,7 +24,6 @@ import {AuthService} from '../../../services/auth/auth-service';
     Button,
     ReactiveFormsModule,
     Message,
-    NgTemplateOutlet
   ],
   templateUrl: './verification.html',
   styleUrl: './verification.scss',

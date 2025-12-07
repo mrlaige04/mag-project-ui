@@ -14,6 +14,11 @@ import {CardDetails} from './pages/card/card-details/card-details';
 import {Verification} from './pages/auth/verification/verification';
 import {userVerifiedGuard} from './utils/guard/user-verified-guard';
 import {ProfileWrapper} from './pages/profile/profile-wrapper/profile-wrapper';
+import {isAdminGuard} from './utils/guard/is-admin-guard';
+import {AdminWrapper} from './pages/admin/admin-wrapper/admin-wrapper';
+import {UsersList} from './pages/admin/users-list/users-list';
+import {HistoryLogs} from './pages/admin/history-logs/history-logs';
+import {VerificationsList} from './pages/admin/verifications-list/verifications-list';
 
 export const routes: Routes = [
   {
@@ -82,6 +87,30 @@ export const routes: Routes = [
         path: 'profile',
         title: 'Profile',
         component: ProfileWrapper
+      },
+      {
+        path: 'admin',
+        title: 'Admin Panel',
+        component: AdminWrapper,
+        canActivate: [isAuthenticatedGuard, isAdminGuard],
+        children: [
+          {
+            path: 'users',
+            component: UsersList
+          },
+          {
+            path: 'verifications',
+            component: VerificationsList
+          },
+          {
+            path: 'history-logs',
+            component: HistoryLogs
+          },
+          {
+            path: '**',
+            redirectTo: 'users',
+          }
+        ]
       }
     ]
   }

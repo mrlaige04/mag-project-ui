@@ -26,6 +26,10 @@
   </ng-template>
   <ng-template #end>
     @if (isAuthenticated()) {
+      @if (isAdmin()) {
+        <p-button icon="pi pi-crown" text size="small" styleClass="mr-3" routerLink="/admin"/>
+      }
+
       <p-menu popup #userMenu [model]="userMenuItems" />
       <p-avatar [label]="avatarLabel" (click)="userMenu.toggle($event)" class="cursor-pointer"/>
     } @else {

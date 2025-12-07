@@ -1,0 +1,16 @@
+<div class="admin-wrapper my-3">
+  <p-tabs [value]="activeMenu.link">
+    <p-tablist class="bg-transparent">
+      @for (menuItem of menuItems; track menuItem.link) {
+        <p-tab (click)="openMenu(menuItem)"
+               [value]="menuItem.link"
+               class="flex gap-2 align-items-center cursor-pointer"
+        >
+          <i [class]="menuItem.icon"></i>
+          <span>{{ menuItem.name }}</span>
+        </p-tab>
+      }
+    </p-tablist>
+    <router-outlet/>
+  </p-tabs>
+</div>
