@@ -19,6 +19,7 @@ import {AdminWrapper} from './pages/admin/admin-wrapper/admin-wrapper';
 import {UsersList} from './pages/admin/users-list/users-list';
 import {HistoryLogs} from './pages/admin/history-logs/history-logs';
 import {VerificationsList} from './pages/admin/verifications-list/verifications-list';
+import {Transfer} from './pages/payments/transfer/transfer';
 
 export const routes: Routes = [
   {
@@ -87,6 +88,10 @@ export const routes: Routes = [
         path: 'profile',
         title: 'Profile',
         component: ProfileWrapper
+      },
+      {
+        path: 'transfer',
+        component: Transfer
       },
       {
         path: 'admin',
