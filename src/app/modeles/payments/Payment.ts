@@ -1,8 +1,8 @@
 import {BaseEntity} from '../BaseEntity';
 
 export type Payment = BaseEntity & {
-  senderCardId: string;
-  receiverCardId: string;
+  senderCardNumber: string;
+  receiverCardNumber: string;
   amount: number;
   currency: string;
   status: PaymentStatus;

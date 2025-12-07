@@ -1,0 +1,41 @@
+<div class="transfer-page my-2">
+  <form class="flex flex-column gap-1" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="from">
+      <p-card header="From">
+        <p-select fluid [options]="cards()"
+                  formControlName="senderCardNumber" optionValue="cardNumber"
+        >
+          <ng-template #selectedItem #item let-card>
+            <div class="flex gap-3 align-items-center w-full my-1">
+              <div class="">
+                <img src="./images/{{card.provider}}.png"  width="30"/>
+              </div>
+              <div class="number flex-1 w-full text-lg">
+                {{ card.cardNumber | cardNumber }}
+              </div>
+              <div class="balance text-lg">
+                {{ card.currency }} {{ card.balance }}
+              </div>
+            </div>
+          </ng-template>
+        </p-select>
+      </p-card>
+    </div>
+    <div class="to">
+      <p-card header="To">
+        <input pInputText type="text" formControlName="receiverCardNumber" fluid/>
+      </p-card>
+    </div>
+    <div class="money">
+      <p-card header="Amount">
+        <div class="flex gap-2">
+          <p-inputNumber fluid [min]="1" placeholder="1488" formControlName="amount"/>
+          <p-select [options]="currencies()" optionValue="name" optionLabel="displayName" formControlName="currency"/>
+        </div>
+      </p-card>
+    </div>
+    <div class="actions mt-3">
+      <p-button [disabled]="!form.valid" label="Send" fluid type="submit"/>
+    </div>
+  </form>
+</div>

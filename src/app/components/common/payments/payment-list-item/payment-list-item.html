@@ -1,0 +1,43 @@
+@let incomingPayment = isIncomingPayment(transaction());
+@let outcomingPayment = isOutcomingPayment(transaction());
+
+<p-card>
+  <div class="flex align-items-center gap-4">
+    <div class="icon p-3 border-round bg-primary-300 w-min">
+      <i class="pi pi-wallet"></i>
+    </div>
+    <div class="flex flex-column gap-1 flex-1">
+      <div class="flex gap-2 align-items-center">
+        <span class="text-500 font-bold">
+          @if (showSenderNumber()) {
+            {{ transaction().senderCardNumber | cardNumber }}
+          }
+          @if (showSenderNumber() && showReceiverNumber()) {
+            =>
+          }
+          @if (showReceiverNumber()) {
+            {{ transaction().receiverCardNumber | cardNumber }}
+          }
+        </span>
+        <app-payments-status-badge [payment]="transaction()"/>
+      </div>
+      <div class="flex gap-2 align-items-center text-color-secondary">
+        <i class="pi pi-calendar"></i>
+        <span>{{ (transaction().completedAt ?? transaction().createdAt) | date }}</span>
+      </div>
+      <span class="text-color-secondary">Comment: {{ transaction().comment }}</span>
+    </div>
+    <div [class.text-green-500]="incomingPayment"
+         [class.text-gray-500]="outcomingPayment"
+         class="text-lg font-bold"
+    >
+      @if (incomingPayment && !outcomingPayment) {
+        {{ '+' }}
+      } @else if (!incomingPayment && outcomingPayment) {
+        {{ '-' }}
+      }
+
+      <span class="text-white-alpha-80 font-bold">{{ transaction().amount }} {{ transaction().currency }}</span>
+    </div>
+  </div>
+</p-card>

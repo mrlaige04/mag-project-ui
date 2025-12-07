@@ -10,8 +10,13 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {PaymentService} from '../../../services/payments/payment-service';
 import {forkJoin, switchMap, tap} from 'rxjs';
 import {Payment} from '../../../modeles/payments/Payment';
-import {UserCard} from '../../../modeles/cards/Card';
-import {DecimalPipe} from '@angular/common';
+import {CardStatus, UserCard} from '../../../modeles/cards/Card';
+import {DatePipe, DecimalPipe} from '@angular/common';
+import {Chip} from 'primeng/chip';
+import {BlockUI} from 'primeng/blockui';
+import {PaymentsStatusBadge} from '../../../components/common/payments/payments-status-badge/payments-status-badge';
+import {CardNumberPipe} from '../../../utils/pipes/card-number-pipe';
+import {PaymentListItem} from '../../../components/common/payments/payment-list-item/payment-list-item';
 
 @Component({
   selector: 'app-main-dashboard',
@@ -19,7 +24,13 @@ import {DecimalPipe} from '@angular/common';
     Card,
     DataView,
     RouterLink,
-    DecimalPipe
+    DecimalPipe,
+    Chip,
+    BlockUI,
+    PaymentsStatusBadge,
+    CardNumberPipe,
+    DatePipe,
+    PaymentListItem
   ],
   templateUrl: './main-dashboard.html',
   styleUrl: './main-dashboard.scss',
@@ -100,6 +111,8 @@ export class MainDashboard extends BasePage implements OnInit {
   public get totalBalance() {
      return this.cards().reduce((sum, x) => sum + x.balance, 0);
   }
+
+  protected readonly CardStatus = CardStatus;
 }
 
 type QuickAction = {

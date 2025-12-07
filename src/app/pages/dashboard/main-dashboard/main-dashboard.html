@@ -5,12 +5,12 @@
     <div class="cards flex flex-row gap-3 my-4">
       @for (card of cards(); track card.cardNumber) {
         <div class="card-wrapper">
-          <p-card routerLink="/cards/{{ card.id }}" class="card w-20rem h-10rem bg-white text-black-alpha-90">
+          <p-card #crd routerLink="/cards/{{ card.id }}" class="card w-20rem h-10rem bg-white text-black-alpha-90">
             <ng-template #title>
               <div class="flex justify-content-between align-items-center">
                 <i class="pi pi-credit-card text-2xl"></i>
                 <span class="tags">
-<!--                  <p-chip class="px-2 py-1 text-sm"/>-->
+                  <p-chip class="px-2 py-1 text-sm" [label]="card.cardType"/>
                 </span>
               </div>
             </ng-template>
@@ -20,6 +20,11 @@
             </ng-template>
           </p-card>
         </div>
+        <p-block-ui [target]="crd" [blocked]="card.status === CardStatus.blocked">
+          <div class="w-full h-full flex justify-content-center align-items-center">
+            <p-chip label="Blocked"/>
+          </div>
+        </p-block-ui>
       }
 
       <div class="card-wrapper">
@@ -51,26 +56,7 @@
       <ng-template #list let-items>
         <div class="grid gap-3 grid-nogutter">
           @for (transaction of items; track transaction.title) {
-            <p-card class="col-12">
-              <div class="flex align-items-center gap-4">
-                <div class="icon p-3 border-round bg-primary-300 w-min">
-                  <i class="pi pi-arrow-up-right"></i>
-                </div>
-                <div class="flex flex-column gap-2 flex-1">
-                  <span class="text-lg font-bold">{{ transaction.title }}</span>
-                  <div class="flex gap-2 align-items-center text-color-secondary">
-                    <i class="pi pi-calendar"></i>
-                    <span>{{ transaction.date?.toLocaleDateString() }}</span>
-                  </div>
-                </div>
-                <div [class.text-green-500]="transaction.direction === 'incoming'"
-                     [class.text-gray-500]="transaction.direction === 'outcoming'"
-                     class="text-lg font-bold"
-                >
-                  {{ transaction.direction === 'incoming' ? '+' : '-' }} {{ transaction.money }} $
-                </div>
-              </div>
-            </p-card>
+            <app-payment-list-item [cards]="cards()" [transaction]="transaction" class="col-12"/>
           }
         </div>
       </ng-template>
