@@ -34,9 +34,23 @@ export class UserService {
     );
   }
 
+  public getUsers() {
+    return this.base.get<User[]>(this.baseUrl);
+  }
+
+  public getUser(id: string) {
+    const fullUrl = `${this.baseUrl}/${id}`;
+    return this.base.get<User>(fullUrl);
+  }
+
   public update(id: string, request: Partial<UpdateUser>) {
     const fullUrl = `${this.baseUrl}/${id}`;
     return this.base.patch(fullUrl, request);
+  }
+
+  public deleteUser(id: string) {
+    const fullUrl = `${this.baseUrl}/${id}`;
+    return this.base.delete(fullUrl);
   }
 
   public clearUser() {

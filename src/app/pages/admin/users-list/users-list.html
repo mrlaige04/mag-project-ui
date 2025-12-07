@@ -1,0 +1,38 @@
+<div class="users-list-page my-1">
+  <p-table [value]="users()" [loading]="isLoading()">
+    <ng-template #header>
+      <tr>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Created</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-user>
+      <tr>
+        <td class="flex gap-2 align-items-center">
+          <p-avatar [label]="getAvatarLabel(user)"/>
+          {{ user.fullName }}
+        </td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <app-user-status-badge [user]="user"/>
+        </td>
+        <td>{{ user.createdAt | date }}</td>
+        <td>
+          <div class="flex gap-1">
+            @if (!isUserAdmin(user)) {
+              <p-button icon="pi pi-trash" size="small" text severity="danger" (onClick)="deleteUser(user.id, $event)" />
+            }
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+
+<p-confirmpopup/>

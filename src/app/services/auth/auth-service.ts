@@ -7,6 +7,7 @@ import {User} from '../../modeles/users/User';
 import {AccessToken} from '../../modeles/auth/AccessToken';
 import {StorageConfig} from '../../config/storage-config';
 import {UserService} from '../user/user-service';
+import {jwtDecode} from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,9 @@ export class AuthService {
 
   private _isAuthenticated = signal(this.accessToken() !== null);
   public isAuthenticated = this._isAuthenticated.asReadonly();
+
+  private _isAdmin = signal(this.getSavedIsAdmin());
+  public isAdmin = this._isAdmin.asReadonly();
 
   public login(request: LoginRequest) {
     const fullUrl = `${this.baseUrl}/login`;
@@ -96,6 +100,9 @@ export class AuthService {
 
     this._accessToken.set(token);
     this._isAuthenticated.set(true);
+
+    const decodedToken= jwtDecode<any>(token.accessToken);
+    this._isAdmin.set(decodedToken?.role === 'admin');
   }
 
   private getSavedToken(): AccessToken | null {
@@ -105,5 +112,15 @@ export class AuthService {
     }
 
     return JSON.parse(storageItem) as AccessToken;
+  }
+
+  private getSavedIsAdmin() {
+    const token = this.getSavedToken();
+    if (!token) {
+      return false;
+    }
+
+    const decodedToken = jwtDecode<any>(token.accessToken);
+    return decodedToken?.role === 'admin';
   }
 }

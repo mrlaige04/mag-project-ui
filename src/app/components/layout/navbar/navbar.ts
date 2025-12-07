@@ -19,6 +19,7 @@ export class Navbar {
   private currentUserService = inject(UserService);
 
   public isAuthenticated = this.authService.isAuthenticated;
+  public isAdmin = this.authService.isAdmin;
   public currentUser = this.currentUserService.currentUser;
 
   public userMenuItems: MenuItem[] = [

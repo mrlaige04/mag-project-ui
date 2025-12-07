@@ -20,3 +20,8 @@ export enum DocumentStatus {
   approved = 'approved',
   rejected = 'rejected',
 }
+
+export const documentTypeDescriptions: Record<string, string> = {
+  'id_card': 'ID Card',
+  'drivers_license': 'Drivers Licence'
+};
