@@ -1,10 +1,19 @@
 @let incomingPayment = isIncomingPayment(transaction());
 @let outcomingPayment = isOutcomingPayment(transaction());
 
+@let showArrowDown = incomingPayment && !outcomingPayment;
+@let showArrowUp = !incomingPayment && outcomingPayment;
+
 <p-card>
   <div class="flex align-items-center gap-4">
     <div class="icon p-3 border-round bg-primary-300 w-min">
-      <i class="pi pi-wallet"></i>
+      @let icon = showArrowUp
+        ? 'pi pi-arrow-up-right'
+        : showArrowDown
+          ? 'pi pi-arrow-down-right'
+          : 'pi pi-wallet';
+
+      <i [class]="icon"></i>
     </div>
     <div class="flex flex-column gap-1 flex-1">
       <div class="flex gap-2 align-items-center">
@@ -31,13 +40,13 @@
          [class.text-gray-500]="outcomingPayment"
          class="text-lg font-bold"
     >
-      @if (incomingPayment && !outcomingPayment) {
-        {{ '+' }}
-      } @else if (!incomingPayment && outcomingPayment) {
-        {{ '-' }}
-      }
-
-      <span class="text-white-alpha-80 font-bold">{{ transaction().amount }} {{ transaction().currency }}</span>
+      <span class="text-white-alpha-80 font-bold">
+        @if (incomingPayment && !outcomingPayment) {
+          {{ '+' }}
+        } @else if (!incomingPayment && outcomingPayment) {
+          {{ '-' }}
+        }{{ transaction().amount }} {{ transaction().currency }}
+      </span>
     </div>
   </div>
 </p-card>

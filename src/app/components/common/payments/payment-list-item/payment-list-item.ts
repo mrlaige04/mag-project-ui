@@ -25,10 +25,10 @@ export class PaymentListItem {
   public showReceiverNumber = input<boolean>(true);
 
   public isOutcomingPayment(payment: Payment) {
-    return this.cards().find(c => c.cardNumber === payment.senderCardNumber) !== null;
+    return this.cards().some(c => c.cardNumber === payment.senderCardNumber);
   }
 
   public isIncomingPayment(payment: Payment) {
-    return this.cards().find(c => c.cardNumber === payment.receiverCardNumber) !== null;
+    return this.cards().some(c => c.cardNumber === payment.receiverCardNumber);
   }
 }
