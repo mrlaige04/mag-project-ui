@@ -2,6 +2,10 @@
   <h3 class="my-0 text-2xl">Welcome Back!</h3>
   <p class="text-color-secondary">Enter your credentials to access your account</p>
 
+  @if (apiError()) {
+    <p-message severity="error">{{ apiError()?.message }}</p-message>
+  }
+
   <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="fields mt-5">
       <app-labeled-input label="Phone Number" [error]="phoneErrorMessage">
@@ -16,7 +20,7 @@
       <p-button routerLink="/auth/forgot" link text>Forgot password?</p-button>
     </div>
     <div class="actions flex flex-column gap-4 mt-2 align-items-center">
-      <p-button type="submit" [loading]="isLoading()" class="w-full" fluid>
+      <p-button [disabled]="!form.valid" type="submit" [loading]="isLoading()" class="w-full" fluid>
         Login
       </p-button>
       <span class="flex align-content-center gap-1 text-center">

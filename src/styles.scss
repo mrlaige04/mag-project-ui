@@ -40,17 +40,11 @@ a {
 }
 
 
-.p-inputtext.ng-invalid.ng-touched {
+.p-inputtext.ng-invalid.ng-touched, .p-password.ng-invalid.ng-touched > .p-inputtext {
   border-color: var(--p-red-500);
   color: var(--p-red-500);
 
   &::placeholder {
     color: var(--p-red-600);
-  }
-}
-
-::ng-deep .p-password.ng-invalid {
-  & input {
-    border-color: var(--p-red-500) !important;
   }
 }
