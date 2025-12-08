@@ -41,10 +41,16 @@ a {
 
 
 .p-inputtext.ng-invalid.ng-touched {
-  border-color: var(--p-red-900);
+  border-color: var(--p-red-500);
   color: var(--p-red-500);
 
   &::placeholder {
-    color: var(--p-red-500);
+    color: var(--p-red-700);
+  }
+}
+
+::ng-deep .p-password.ng-invalid {
+  & input {
+    border-color: var(--p-red-500) !important;
   }
 }

@@ -4,7 +4,7 @@ import {Component, input} from '@angular/core';
   selector: 'app-labeled-input',
   imports: [],
   templateUrl: './labeled-input.html',
-  styleUrl: './labeled-input.scss',
+  styleUrl: './labeled-input.scss'
 })
 export class LabeledInput {
   public label = input.required<string>();
