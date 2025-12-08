@@ -11,6 +11,7 @@ import {ReactiveFormsModule, Validators} from '@angular/forms';
 import {finalize, take, tap} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {AccessToken} from '../../../modeles/auth/AccessToken';
+import {Message} from 'primeng/message';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ import {AccessToken} from '../../../modeles/auth/AccessToken';
     Password,
     RouterLink,
     LabeledInput,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Message
   ],
   templateUrl: './login.html',
   styleUrl: './login.scss',
@@ -54,5 +56,31 @@ export class Login extends BasePage {
       takeUntilDestroyed(this.destroyRef),
       finalize(() => this.isLoading.set(false))
     ).subscribe();
+  }
+
+  public get phoneErrorMessage() {
+    const control = this.form.get('phone');
+    if (!control || control.untouched) {
+      return null;
+    }
+
+    if (control.hasError('required')) {
+      return 'Phone is required';
+    }
+
+    return null;
+  }
+
+  public get passwordErrorMessage() {
+    const control = this.form.get('password');
+    if (!control || control.untouched) {
+      return null;
+    }
+
+    if (control.hasError('required')) {
+      return 'Password is required';
+    }
+
+    return null;
   }
 }

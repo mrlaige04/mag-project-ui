@@ -9,4 +9,6 @@ import {Component, input} from '@angular/core';
 export class LabeledInput {
   public label = input.required<string>();
   public class = input<string>('');
+
+  public error = input<string | null>(null);
 }

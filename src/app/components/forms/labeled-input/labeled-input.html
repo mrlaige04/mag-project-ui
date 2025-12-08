@@ -1,4 +1,11 @@
-<div class="flex flex-column gap-2 {{ class() }}">
-  <label class="font-semibold">{{ label() }}</label>
-  <ng-content/>
+<div class="">
+  <div class="flex flex-column gap-2 {{ class() }}">
+    <label class="font-semibold">{{ label() }}</label>
+    <ng-content/>
+
+  </div>
+
+  @if (error()) {
+    <span class="text-sm text-red-500 block mt-1 font-semibold">{{ error() }}</span>
+  }
 </div>

@@ -9,11 +9,13 @@ import {Card} from 'primeng/card';
 import {InputText} from 'primeng/inputtext';
 import {InputNumber} from 'primeng/inputnumber';
 import {Select} from 'primeng/select';
-import {ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CardNumberPipe} from '../../../utils/pipes/card-number-pipe';
 import {AutoComplete} from 'primeng/autocomplete';
 import {PaymentService} from '../../../services/payments/payment-service';
 import {SendPayment} from '../../../modeles/payments/SendPayment';
+import {SelectButton} from 'primeng/selectbutton';
+import {InputMask} from 'primeng/inputmask';
 
 @Component({
   selector: 'app-transfer',
@@ -25,7 +27,9 @@ import {SendPayment} from '../../../modeles/payments/SendPayment';
     Select,
     ReactiveFormsModule,
     CardNumberPipe,
-    AutoComplete
+    SelectButton,
+    FormsModule,
+    InputMask
   ],
   templateUrl: './transfer.html',
   styleUrl: './transfer.scss',
@@ -41,6 +45,11 @@ export class Transfer extends BasePage implements OnInit {
     { name: 'UAH', displayName: 'UAH' },
   ]);
 
+  public cardSelectionTypes: CardSelectionType[] = [
+    { type: 'own', displayName: 'My card' },
+    { type: 'custom', displayName: 'Custom card' },
+  ];
+
   public form = this.fb.group({
     senderCardNumber: this.fb.control('', [
       Validators.required,
@@ -49,9 +58,9 @@ export class Transfer extends BasePage implements OnInit {
     ]),
     receiverCardNumber: this.fb.control('', [
       Validators.required,
-      Validators.minLength(16),
-      Validators.maxLength(16)
+      Validators.pattern('^(?:\\d{4}[\\s-]?){3}\\d{4}$')
     ]),
+    cardSelectionType: this.fb.control('own'),
     amount: this.fb.control(0, [Validators.required, Validators.min(1)]),
     currency: this.fb.control(this.currencies()[0].name, [Validators.required]),
   });
@@ -70,8 +79,13 @@ export class Transfer extends BasePage implements OnInit {
       return;
     }
 
+    const cleanReceiver = this.form.value.receiverCardNumber!.replace(/\D/g, '');
+
     this.isLoading.set(true);
-    this.paymentService.transfer(this.form.value as SendPayment).pipe(
+    this.paymentService.transfer({
+      ...this.form.value,
+      receiverCardNumber: cleanReceiver,
+    } as SendPayment).pipe(
       tap(() => this.router.navigate(['dashboard'])),
       takeUntilDestroyed(this.destroyRef),
       finalize(() => this.isLoading.set(false)),
@@ -81,5 +95,10 @@ export class Transfer extends BasePage implements OnInit {
 
 type Currency = {
   name: string;
+  displayName: string;
+};
+
+type CardSelectionType = {
+  type: 'own' | 'custom';
   displayName: string;
 };
