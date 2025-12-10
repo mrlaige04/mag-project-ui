@@ -8,13 +8,19 @@
 
   <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="fields mt-5">
-      <app-labeled-input label="Phone Number" [error]="phoneErrorMessage">
-        @let phoneControl = form.get('phone');
-        <input pInputText formControlName="phone" type="text" placeholder="+380987654321" />
-      </app-labeled-input>
-      <app-labeled-input label="Password" class="mt-3" [error]="passwordErrorMessage">
-        <p-password fluid placeholder="*********" formControlName="password" [feedback]="false"/>
-      </app-labeled-input>
+      @if (state() === LoginStep.PhonePassword) {
+        <app-labeled-input label="Phone Number" [error]="phoneErrorMessage">
+          @let phoneControl = form.get('phone');
+          <input pInputText formControlName="phone" type="text" placeholder="+380987654321" />
+        </app-labeled-input>
+        <app-labeled-input label="Password" class="mt-3" [error]="passwordErrorMessage">
+          <p-password fluid placeholder="*********" formControlName="password" [feedback]="false"/>
+        </app-labeled-input>
+      } @else {
+        <app-labeled-input label="Two Factor Code">
+          <input pInputText formControlName="twoFactorCode" type="text" placeholder="123456"/>
+        </app-labeled-input>
+      }
     </div>
     <div class="pre-actions mt-2">
       <p-button routerLink="/auth/forgot" link text>Forgot password?</p-button>

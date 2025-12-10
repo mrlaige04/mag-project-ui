@@ -15,6 +15,11 @@ import {Message} from 'primeng/message';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ApiError} from '../../../modeles/ApiError';
 
+enum LoginStep {
+  PhonePassword,
+  TwoFactorCode
+}
+
 @Component({
   selector: 'app-login',
   imports: [
@@ -33,6 +38,9 @@ export class Login extends BasePage {
   private authService = inject(AuthService);
   private destroyRef = inject(DestroyRef);
 
+  public state = signal<LoginStep>(LoginStep.PhonePassword);
+  private userId = signal<string | null>(null);
+
   public apiError = signal<ApiError | null>(null);
 
   public form = this.fb.group({
@@ -49,27 +57,43 @@ export class Login extends BasePage {
     this.isLoading.set(true);
     this.apiError.set(null);
 
-    this.authService.login(this.form.value as LoginRequest).pipe(
-      catchError((err: HttpErrorResponse) => {
-        const error = err.error as ApiError;
-        this.apiError.set(error);
-        return of(null);
-      }),
-      tap(async res => {
-        const fa = res as { require2fa: boolean };
-        if (fa.require2fa) {
+    if (this.state() === LoginStep.PhonePassword) {
+      this.authService.login(this.form.value as LoginRequest).pipe(
+        catchError((err: HttpErrorResponse) => {
+          const error = err.error as ApiError;
+          this.apiError.set(error);
+          return of(null);
+        }),
+        tap(async res => {
+          const fa = res as { require2fa: boolean, userId: string; };
+          if (fa.require2fa && fa.userId) {
+            this.state.set(LoginStep.TwoFactorCode);
+            this.userId.set(fa.userId);
 
-          return;
-        }
+            return;
+          }
 
-        const accessToken = res as AccessToken;
-        if (accessToken && accessToken.accessToken) {
-          await this.router.navigate(['dashboard']);
-        }
-      }),
-      takeUntilDestroyed(this.destroyRef),
-      finalize(() => this.isLoading.set(false))
-    ).subscribe();
+          const accessToken = res as AccessToken;
+          if (accessToken && accessToken.accessToken) {
+            await this.router.navigate(['dashboard']);
+          }
+        }),
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.isLoading.set(false))
+      ).subscribe();
+    } else {
+      this.authService.verify2fa(this.userId()!, this.form.value.twoFactorCode!).pipe(
+        tap(async res => {
+          const accessToken = res as AccessToken;
+          if (accessToken && accessToken.accessToken) {
+            console.log('redirect')
+            await this.router.navigate(['dashboard']);
+          }
+        }),
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.isLoading.set(false))
+      ).subscribe();
+    }
   }
 
   public get phoneErrorMessage() {
@@ -97,4 +121,6 @@ export class Login extends BasePage {
 
     return null;
   }
+
+  protected readonly LoginStep = LoginStep;
 }
