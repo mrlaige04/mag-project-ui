@@ -38,3 +38,13 @@ a {
 *::-webkit-scrollbar-thumb:hover {
   background-color: var(--p-primary-600);
 }
+
+
+.p-inputtext.ng-invalid.ng-touched, .p-password.ng-invalid.ng-touched > .p-inputtext {
+  border-color: var(--p-red-500);
+  color: var(--p-red-500);
+
+  &::placeholder {
+    color: var(--p-red-600);
+  }
+}

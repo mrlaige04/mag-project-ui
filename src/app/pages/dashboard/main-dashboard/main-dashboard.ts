@@ -29,7 +29,6 @@ import {PaymentListItem} from '../../../components/common/payments/payment-list-
     BlockUI,
     PaymentsStatusBadge,
     CardNumberPipe,
-    DatePipe,
     PaymentListItem
   ],
   templateUrl: './main-dashboard.html',

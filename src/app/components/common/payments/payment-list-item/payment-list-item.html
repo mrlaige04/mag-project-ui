@@ -17,15 +17,15 @@
     </div>
     <div class="flex flex-column gap-1 flex-1">
       <div class="flex gap-2 align-items-center">
-        <span class="text-500 font-bold">
+        <span class="text-500 font-bold font-italic">
           @if (showSenderNumber()) {
-            {{ transaction().senderCardNumber | cardNumber }}
+            **** {{ transaction().senderCardNumber.slice(-4) }}
           }
           @if (showSenderNumber() && showReceiverNumber()) {
             =>
           }
           @if (showReceiverNumber()) {
-            {{ transaction().receiverCardNumber | cardNumber }}
+            **** {{ transaction().receiverCardNumber.slice(-4) }}
           }
         </span>
         <app-payments-status-badge [payment]="transaction()"/>

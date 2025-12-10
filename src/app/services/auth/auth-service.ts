@@ -63,7 +63,14 @@ export class AuthService {
 
   public verify2fa(userId: string, code: string) {
     const fullUrl = `${this.baseUrl}/2fa/verify`;
-    return this.http.post(fullUrl, { userId, code });
+    return this.http.post<AccessToken>(fullUrl, { userId, code }).pipe(
+      tap(token => {
+        const accessToken = token as AccessToken;
+        if (accessToken && accessToken.accessToken) {
+          this.handleSuccessLogin(accessToken);
+        }
+      })
+    );
   }
 
   public refreshToken(refreshToken: string) {

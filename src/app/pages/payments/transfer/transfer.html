@@ -23,7 +23,42 @@
     </div>
     <div class="to">
       <p-card header="To">
-        <input pInputText type="text" formControlName="receiverCardNumber" fluid/>
+        <div class="flex flex-column gap-2 my-1">
+          <p-select-button formControlName="cardSelectionType"
+                           name="cardSelectionType"
+                           fluid [options]="cardSelectionTypes"
+                           optionValue="type" optionLabel="displayName">
+            <ng-template #item let-item>
+              {{ item.displayName }}
+            </ng-template>
+          </p-select-button>
+
+          @if (form.get('cardSelectionType')?.value === 'own') {
+            <p-select fluid [options]="cards()"
+                      formControlName="receiverCardNumber" optionValue="cardNumber"
+            >
+              <ng-template #selectedItem #item let-card>
+                <div class="flex gap-3 align-items-center w-full my-1">
+                  <div class="">
+                    <img src="./images/{{card.provider}}.png"  width="30"/>
+                  </div>
+                  <div class="number flex-1 w-full text-lg">
+                    {{ card.cardNumber | cardNumber }}
+                  </div>
+                  <div class="balance text-lg">
+                    {{ card.currency }} {{ card.balance }}
+                  </div>
+                </div>
+              </ng-template>
+            </p-select>
+          } @else {
+            <p-input-mask
+              mask="9999 9999 9999 9999"
+              fluid formControlName="receiverCardNumber" slotChar=""
+              [autoClear]="false"
+            />
+          }
+        </div>
       </p-card>
     </div>
     <div class="money">

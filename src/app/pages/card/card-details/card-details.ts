@@ -81,7 +81,7 @@ export class CardDetails extends BasePage implements OnInit {
   public close() {
     this.isLoading.set(true);
 
-    this.cardService.blockCard(this.card()?.id!).pipe(
+    this.cardService.closeCard(this.card()?.id!).pipe(
       tap(() => {
         this.card.update(c => ({ ...c, status: CardStatus.closed } as UserCard))
       }),
